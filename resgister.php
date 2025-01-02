@@ -15,6 +15,5 @@
     <input type ="text" name = "email" palceholder="Email Id" required> 
     <input type ="text" name = "phoneNumber" palceholder="Phone Number" required> 
     <input type ="submit" name = "register" value = "register">
-    
 </body>
 </html>
