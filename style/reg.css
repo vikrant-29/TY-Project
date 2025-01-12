@@ -1,0 +1,101 @@
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+.form-container {
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Hide all divs by default */
+.form-container .step {
+    display: none;
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Show only the selected step */
+.form-container input[type="radio"]:checked + label + .step {
+    display: block;
+}
+
+/* Styling for radio buttons */
+input[type="radio"] {
+}
+
+/* Labels as navigation buttons */
+label {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    display: inline-block;
+}
+
+label:hover {
+    background-color: #006f82;
+}
+
+/* Navigation buttons styling */
+.submit {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit label {
+    background-color: #4CAF50;
+}
+
+.submit label:last-child {
+    background-color: #f44336;
+}
+
+.submit label:hover {
+    background-color: #45a049;
+}
+
+h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Styling for input fields */
+input[type="text"],
+input[type="date"],
+input[type="file"],
+select {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.submit label {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border-radius: 4px;
+    margin: 5px;
+    display: inline-block;
+}

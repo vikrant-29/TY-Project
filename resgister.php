@@ -8,12 +8,13 @@
 <body>
 <h2>Create New Account</h2>   
     <form action = user_data.php method="POST">
-    <input type="text" name = "firstName" placeholder="First Name" requrired >
-    <input type ="text" name = "lastName" palceholder="Last Name" required> 
-    <input type ="text" name = "userName" palceholder="User Name" required> 
-    <input type ="text" name = "password" palceholder="Password Name" required> 
-    <input type ="text" name = "email" palceholder="Email Id" required> 
-    <input type ="text" name = "phoneNumber" palceholder="Phone Number" required> 
-    <input type ="submit" name = "register" value = "register">
+    <input type="text" name = "firstName" placeholder="First Name" requrired><br>
+    <input type ="text" name = "lastName" placeholder="Last Name" required><br>
+    <input type ="text" name = "userName" placeholder="Username" required> <br>
+    <input type ="text" name = "password" placeholder="Password" required> <br>
+    <input type ="text" name = "email" placeholder="Email" required> <br>
+    <input type ="text" name = "phoneNumber" placeholder="PhoneNo" required><br> 
+    <input type ="submit" name = "register" value = "register"><br>
+    </form>
 </body>
 </html>
