@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
@@ -19,3 +20,6 @@ CREATE TABLE users (
     documentFile VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+=======
+aditya can you see thise changes 
+>>>>>>> 5c089da6eda172063d75fee69d96e7d240bb1a7d
