@@ -1,16 +1,36 @@
 <?php
+include("includes/header.html");
+session_start();
 include('includes/connect.php');  // Update this path if needed
 
-$firstName = isset($_POST['firstName']) ? $_POST['firstName'] : 'abc';
-$lastName = isset($_POST['lastName']) ? $_POST['lastName'] : 'abc';
-$userName = isset($_POST['userName']) ? $_POST['userName'] : 'abc';
-$password = isset($_POST['password']) ? $_POST['password'] : 'abc';
-$email = isset($_POST['email']) ? $_POST['email'] : 'abc';
-$phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : 'abc';
+$firstName =  $_SESSION['firstName'];
+$lastName =  $_SESSION['lastName'];
+$userName =  $_SESSION['userName'];
+$password =  $_SESSION['password'];
+$email =  $_SESSION['email'];
+$phoneNumber =  $_SESSION['PhoneNo'];
 
 
 if (isset($_POST['sub_btn'])) {
     // Personal Details
+   
+    $checkAadharQuery = "SELECT * FROM users WHERE aadharNo = '{$_POST['aadharNo']}'";
+    $checkPanQuery = "SELECT * FROM users WHERE panNo = '{$_POST['panNo']}'";
+
+    $aadharResult = mysqli_query($conn, $checkAadharQuery);
+    $panResult = mysqli_query($conn, $checkPanQuery);
+
+   
+    // If Aadhar number already exists
+    if (mysqli_num_rows($aadharResult) > 0) {
+        echo "<script>alert('Aadhar number already exists. Please use a different Aadhar number.'); window.location.href = 'registration_page.php';</script>";
+    }
+    // If PAN number already exists
+    elseif (mysqli_num_rows($panResult) > 0) {
+        echo "<script>alert('PAN number already exists. Please use a different PAN number.'); window.location.href = 'registration_page.php';</script>";
+    }
+    else {
+
     $gender = $_POST['gender'];
     $dob = $_POST['dob'];
     $maritalStatus = $_POST['maritalStatus'];
@@ -47,14 +67,14 @@ if (isset($_POST['sub_btn'])) {
 
     // Execute the query
     if (mysqli_query($conn, $query)) {
-        echo "User data saved successfully.";
+        echo "<script>alert('User data saved successfully.'); window.location.href = 'user_data.php';</script>";
     } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($conn);
+        echo "<script>alert('Error:'); window.location.href = 'registration_page.php';</script>";
     }
+}
 }
 ?>
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,7 +82,15 @@ if (isset($_POST['sub_btn'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Information Form</title>
-    <link rel="stylesheet" href="style /reg.css">
+
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+      
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css?v=1.0">
+
+    <link rel="stylesheet" href="style/reg.css">
 </head>
 
 <body>
@@ -82,9 +110,9 @@ if (isset($_POST['sub_btn'])) {
                 <input type="text" name="email" value="<?php echo $email; ?>" disabled>
                 <input type="text" name="phoneNumber" value="<?php echo $phoneNumber; ?>" disabled>
                 <h3>Select your gender:</h3>
-                <input type="radio" name="gender" required> Male
-                <input type="radio" name="gender" required> Female
-                <input type="radio" name="gender" required> Other<br>
+                <input type="radio" name="gender" value="Male" required> Male
+                <input type="radio" name="gender" value="Female" required> Female
+                <input type="radio" name="gender" value="Other" required> Other<br>
                 <h3>Enter Date of Birth:</h3>
                 <input type="date" name="dob" required>
                 <h3>Marital Status:</h3>
@@ -101,12 +129,12 @@ if (isset($_POST['sub_btn'])) {
             <div class="step">
                 <h3>Address Details</h3>
                 <input type="text" name="addressLine1" placeholder="Address Line 1" required>
-                <input type="text" name="addressLine2" placeholder="Address Line 2" required>
-                <input type="text" name="addressLine3" placeholder="Address Line 3" required>
+                <input type="text" name="addressLine2" placeholder="Address Line 2" >
+                <input type="text" name="addressLine3" placeholder="Address Line 3" >
                 <h3>Corresponding Address Details</h3>
                 <input type="text" name="correspondingLine1" placeholder="Address Line 1" required>
-                <input type="text" name="correspondingLine2" placeholder="Address Line 2" required>
-                <input type="text" name="correspondingLine3" placeholder="Address Line 3" required>
+                <input type="text" name="correspondingLine2" placeholder="Address Line 2" >
+                <input type="text" name="correspondingLine3" placeholder="Address Line 3" >
                 <label for="step1">Previous</label>
             </div>
 
@@ -118,9 +146,9 @@ if (isset($_POST['sub_btn'])) {
                 <input type="text" name="aadharNo" placeholder="Enter Aadhar Number" required>
                 <input type="text" name="panNo" placeholder="Enter PAN Number" required>
                 <span>Enter your Photo: </span>
-                <input type="file" name="photo" accept=".jpg, .jpeg, .png, .pdf" required>
+                <input type="file" name="photo" accept=".jpg, .jpeg, .png, .pdf">
                 <span>Enter your Signature: </span>
-                <input type="file" name="sign" accept=".jpg, .jpeg, .png, .pdf" required>
+                <input type="file" name="sign" accept=".jpg, .jpeg, .png, .pdf">
                 <label for="step2">Previous</label>
             </div>
 
@@ -135,7 +163,7 @@ if (isset($_POST['sub_btn'])) {
                     <option value="voter_c">Voter card</option>
                     <option value="eletric_b">Electric bill</option>
                 </select>
-                <input type="file" name="document" accept=".jpg, .jpeg, .png, .pdf" required>
+                <input type="file" name="document" accept=".jpg, .jpeg, .png, .pdf">
                 <div class="submit">
                     <label for="step3">Previous</label>
                 </div>
