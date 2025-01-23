@@ -19,3 +19,7 @@ CREATE TABLE users (
     documentFile VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+/*admin value insertion cmd*/  
+INSERT INTO `admin` (`id`, `name`, `username`, `password`)
+VALUES ('13324', 'Aditya Ajit Gowari', 'aditya@24', 'aditya@24'), ('13321', 'Vikrant Vijay Patil', 'vikrant@21', 'vikrant@21');
