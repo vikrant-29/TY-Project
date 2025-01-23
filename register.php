@@ -41,12 +41,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-<<<<<<< HEAD:resgister.php
-
-
     <div class="container my-5 bg-transparent">
         <h4>Create Your New Account</h4>
-        <form action="resgister.php" method="POST" class="form-group">
+        <form action="register.php" method="POST" class="form-group">
             <div class="row my-3">
                 <div class="col">
                     <label for="firstName">First Name</label>
@@ -86,18 +83,5 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Register" class="btn btn-primary">
         </form>
     </div>
-
-=======
-<h2>Create New Account</h2>   
-    <form action = user_data.php method="POST">
-    <input type="text" name = "firstName" placeholder="First Name" requrired ><br>
-    <input type ="text" name = "lastName" palceholder="Last Name" required> <br>
-    <input type ="text" name = "userName" palceholder="User Name" required> <br>
-    <input type ="text" name = "password" palceholder="Password Name" required> <br>
-    <input type ="text" name = "email" palceholder="Email Id" required> <br>
-    <input type ="text" name = "phoneNumber" palceholder="Phone Number" required> 
-    <input type ="submit" name = "register" value = "register">
->>>>>>> 5c089da6eda172063d75fee69d96e7d240bb1a7d:register.php
 </body>
-
 </html>
