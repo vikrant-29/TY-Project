@@ -1,7 +1,7 @@
 /* Basic Styles for the registration page */
 /* Add this to your style */
 body {
-    background-image: url('/Bank_Management_System/bank_img/back3.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Bank_Management_System/bank_img/back3.jpeg');
     background-size:cover;
     background-position: center;
     background-attachment: fixed;

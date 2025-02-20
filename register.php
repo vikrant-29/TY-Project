@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['PhoneNo'] = $_POST['PhoneNo'];
-        header('location:user_data.php');
+        //header('Location: user_data.php');
     }
 }
 ?>
@@ -41,47 +41,63 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <div class="container my-5 bg-transparent">
+    <div class="container"><!-- my-5 bg-transparent -->
         <h4>Create Your New Account</h4>
         <form action="register.php" method="POST" class="form-group">
             <div class="row my-3">
                 <div class="col">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" name="firstName" required>
+                    <input type="text" class="form-control" id="nm" name="firstName" onblur="valname(this.value)" required>
+                    <small id="valname"> </small>
                 </div>
 
                 <div class="col">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" required>
+                    <input type="text" class="form-control" id="lnm"  name="lastName"onblur="val_lname(this.value)" required>
+                    <small id="val_lname"></small>
                 </div>
             </div>
 
             <div class="row my-3">
                 <div class="col">
                     <label for="userName">Username</label>
-                    <input type="text" class="form-control" name="userName" required>
+                    <input type="text" class="form-control" id="username" name="userName" onblur="val_unm(this.value)" required>
+                    <small id="user_nm"></small>
                 </div>
 
                 <div class="col">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" required>
+                    <input type="password" class="form-control" id="passw" name="password" onkeyup="pass(this.value)" required>
+                    <small id="pass"></small>
+                </div>
+
+                <div class="col">
+                    <label for="password">Comfirm Password</label>
+                    <input type="password" class="form-control" id="cpass" name="c_pass" onkeyup="con_pass(this.value)" required>
+                    <small id="c_p"></small>
                 </div>
             </div>
 
             <div class="row my-3">
                 <div class="col">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" onblur="email_val(this.value)" required>
+                    <small id="email_val"></small>
                 </div>
 
                 <div class="col">
                     <label for="phone">Phone Number</label>
-                    <input type="text" class="form-control" name="PhoneNo" required>
+                    <input type="text" class="form-control" id="phone" name="PhoneNo" onkeyup="phone_no(this.value)" required>
+                    <small id="phone_no"></small>
                 </div>
             </div>
 
-            <input type="submit" name="submit" value="Register" class="btn btn-primary">
+            <input type="button" name="submit" value="Register" onclick="submit_form()"  class="btn btn-primary">
+
+            <span id="nnn" style="color: yellow; font-size:0px;"></span>
         </form>
     </div>
 </body>
+<script src="scripts/val.js"></script>
+
 </html>
