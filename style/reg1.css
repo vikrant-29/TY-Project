@@ -1,7 +1,7 @@
 /* Basic Styles for the registration page */
 /* Add this to your style */
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Bank_Management_System/bank_img/back3.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Bank_Management_System/bank_img/back3.jpeg');
     background-size:cover;
     background-position: center;
     background-attachment: fixed;
@@ -43,17 +43,204 @@ input[type="submit"]:hover {
     background-color: #094380;
 }
 
+/* Feedback Form Styles */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #00d9ff;
+}
+
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #00d9ff;
+    background: rgba(0, 0, 0, 0.5);
+    color: #d1f0ff;
+    font-size: 16px;
+    resize: vertical;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #00d9ff;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background-color: #ff0077;
+    color: white;
+}
+
+/* Feedback History Styles */
+.feedback-history {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.feedback-history label {
+    font-size: 20px;
+    color: #00d9ff;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.feedback-item {
+    padding: 15px;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.feedback-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(255, 0, 119, 0.7);
+}
+
+.feedback-item p {
+    margin: 10px 0;
+    color: #d1f0ff;
+}
+
+.feedback-item strong {
+    color: #00d9ff;
+}
+
+.feedback-item .status {
+    font-weight: bold;
+    color: #ff0077;
+}
+
+.feedback-item .admin-reply {
+    color: #00d9ff;
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 3px solid #ff0077;
+}
+
+/* No Feedback Message */
+.no-feedback {
+    text-align: center;
+    color: #d1f0ff;
+    font-size: 18px;
+}
+/* Navbar Styles */
+.navbar {
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.navbar .logo img {
+    max-height: 60px;
+    width: auto;
+}
+span{
+    color:white;
+}
+.navbar .menu {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .menu a {
+    color: #00d9ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar .menu a:hover {
+    color: #ff0077;
+}
+
+.navbar .balance {
+    color: #00d9ff;
+    font-weight: bold;
+}
+
+.navbar .logout {
+    background-color: #ff0077;
+    color: white;
+    padding: 5px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.navbar .logout:hover {
+    background-color: #ff0050;
+}
+
 /* Responsive Design */
-@media (max-width: 768px) {
+/* Mobile Devices */
+@media (max-width: 767px) {
     .container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    form {
         padding: 15px;
     }
 
-    .form-control {
+    input[type="submit"] {
         font-size: 14px;
     }
 
-    h2 {
-        font-size: 20px;
+    .feedback-history {
+        padding: 10px;
+    }
+
+    .feedback-item {
+        padding: 10px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    form {
+        max-width: 80%;
+    }
+
+    .feedback-history {
+        max-width: 90%;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include("includes/header.html");
 
 session_start();
@@ -22,6 +23,7 @@ if (isset($_POST['submit'])) {
         //header('Location: user_data.php');
     }
 }
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,8 +93,8 @@ if (isset($_POST['submit'])) {
                     <small id="phone_no"></small>
                 </div>
             </div>
-
-            <input type="button" name="submit" value="Register" onclick="submit_form()"  class="btn btn-primary">
+        
+            <input type="submit" name="submit" value="Register" onclick="submit_form()"  class="btn btn-primary">
 
             <span id="nnn" style="color: yellow; font-size:0px;"></span>
         </form>

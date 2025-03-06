@@ -1,0 +1,225 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Bank_Management_System/bank_img/back3.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #d1f0ff;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00d9ff;
+}
+
+.menu a {
+    color: #00d9ff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #ff0077;
+    text-shadow: 0 0 10px rgba(255, 0, 119, 0.7);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.logout {
+    background: #ff0077;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.logout:hover {
+    background: #ff0050;
+}
+
+/* Cards */
+.card {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(255, 0, 119, 0.7);
+}
+
+.card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #00d9ff;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #d1f0ff;
+}
+
+th {
+    background: rgba(0, 217, 255, 0.5);
+    color: #00d9ff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Buttons */
+button {
+    background: #00d9ff;
+    border: none;
+    padding: 8px 12px;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background: #ff0077;
+    color: white;
+}
+
+/* Profile Card */
+#profile .profile-card {
+    background: rgba(0, 0, 0, 0.7);
+    width: 320px;
+    height: 420px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 217, 255, 0.5);
+    border-radius: 10px;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+#profile .profile-bg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#profile .profile-content {
+    text-align: center;
+    padding: 10px;
+}
+
+#profile .profile-content h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #00d9ff;
+}
+
+#profile .profile-content p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #d1f0ff;
+}
+
+/* Responsive Design */
+/* Mobile Devices */
+@media (max-width: 767px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    #profile .profile-card {
+        width: 90%;
+        height: auto;
+    }
+
+    .logout {
+        margin-top: 10px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .card {
+        width: 45%;
+        margin: 10px auto;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    #profile .profile-card {
+        width: 70%;
+    }
+}

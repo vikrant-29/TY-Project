@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 include("includes/header.html");
 session_start();
 include('includes/connect.php');  // Update this path if needed
@@ -10,69 +12,95 @@ $password =  $_SESSION['password'];
 $email =  $_SESSION['email'];
 $phoneNumber =  $_SESSION['PhoneNo'];
 
-
 if (isset($_POST['sub_btn'])) {
     // Personal Details
-   
+
     $checkAadharQuery = "SELECT * FROM users WHERE aadharNo = '{$_POST['aadharNo']}'";
     $checkPanQuery = "SELECT * FROM users WHERE panNo = '{$_POST['panNo']}'";
 
     $aadharResult = mysqli_query($conn, $checkAadharQuery);
     $panResult = mysqli_query($conn, $checkPanQuery);
 
-   
+
     // If Aadhar number already exists
     if (mysqli_num_rows($aadharResult) > 0) {
-        echo "<script>alert('Aadhar number already exists. Please use a different Aadhar number.'); window.location.href = 'registration_page.php';</script>";
+        echo "<script>alert('Aadhar number already exists. Please use a different Aadhar number.'); window.location.href = 'user_data.php';</script>";
     }
     // If PAN number already exists
     elseif (mysqli_num_rows($panResult) > 0) {
-        echo "<script>alert('PAN number already exists. Please use a different PAN number.'); window.location.href = 'registration_page.php';</script>";
-    }
-    else {
-
-    $gender = $_POST['gender'];
-    $dob = $_POST['dob'];
-    $maritalStatus = $_POST['maritalStatus'];
-
-    // Address Details
-    $adl1 = $_POST['addressLine1'];
-    $adl2 = $_POST['addressLine2'];
-    $adl3 = $_POST['addressLine3'];
-    $resi_address = $adl1 . " " . $adl2 . " " . $adl3;
-
-    $corr1 = $_POST['correspondingLine1'];
-    $corr2 = $_POST['correspondingLine2'];
-    $corr3 = $_POST['correspondingLine3'];
-    $corr_address = $corr1 . " " . $corr2 . " " . $corr3;
-
-    // Identification Details
-    $aadharNo = $_POST['aadharNo'];
-    $panNo = $_POST['panNo'];
-
-    // File Uploads
-    $photo = $_FILES['photo']['name'];
-    $sign = $_FILES['sign']['name'];
-    $documentType = $_POST['doxs'];
-    $documentFile = $_FILES['document']['name'];
-
-    // Move uploaded files to appropriate directories
-    move_uploaded_file($_FILES['photo']['tmp_name'], 'uimg/' . $photo);
-    move_uploaded_file($_FILES['sign']['tmp_name'], 'uimg/' . $sign);
-    move_uploaded_file($_FILES['document']['tmp_name'], 'udocx/' . $documentFile);
-
-    // SQL query to insert user data into the database
-    $query = "INSERT INTO users (firstName, lastName, userName, pass, email, phoneNumber, gender, dob, maritalStatus, resi_address, corr_address, aadharNo, panNo, photo, sign, documentType, documentFile) 
-              VALUES ('$firstName', '$lastName', '$userName', '$password', '$email', '$phoneNumber', '$gender', '$dob', '$maritalStatus', '$resi_address', '$corr_address', '$aadharNo', '$panNo', '$photo', '$sign', '$documentType', '$documentFile')";
-
-    // Execute the query
-    if (mysqli_query($conn, $query)) {
-        echo "<script>alert('User data saved successfully.'); window.location.href = 'user_data.php';</script>";
+        echo "<script>alert('PAN number already exists. Please use a different PAN number.'); window.location.href = 'user_data.php';</script>";
     } else {
-        echo "<script>alert('Error:'); window.location.href = 'registration_page.php';</script>";
+
+        $gender = $_POST['gender'];
+        $dob = $_POST['dob'];
+        $maritalStatus = $_POST['maritalStatus'];
+        $security_q =  $_POST['securityQuestion'];
+        $answer = $_POST['securityAnswer'];
+
+        // Address Details
+        $adl1 = $_POST['addressLine1'];
+        $adl2 = $_POST['addressLine2'];
+        $adl3 = $_POST['addressLine3'];
+        $resi_address = $adl1 . " " . $adl2 . " " . $adl3;
+
+        $corr1 = $_POST['correspondingLine1'];
+        $corr2 = $_POST['correspondingLine2'];
+        $corr3 = $_POST['correspondingLine3'];
+        $corr_address = $corr1 . " " . $corr2 . " " . $corr3;
+
+        // Identification Details
+        $aadharNo = $_POST['aadharNo'];
+        $panNo = $_POST['panNo'];
+
+        // File Uploads
+        $photo = $_FILES['photo']['name'];
+        $sign = $_FILES['sign']['name'];
+        $documentType = $_POST['doxs'];
+        $documentFile = $_FILES['document']['name'];
+
+        // Move uploaded files to appropriate directories
+        move_uploaded_file($_FILES['photo']['tmp_name'], 'uimg/' . $photo);
+        move_uploaded_file($_FILES['sign']['tmp_name'], 'uimg/' . $sign);
+        move_uploaded_file($_FILES['document']['tmp_name'], 'udocx/' . $documentFile);
+
+        // SQL query to insert user data into the database
+        $query = "INSERT INTO users (firstName, lastName, userName, pass, email, phoneNumber, gender, dob, maritalStatus, resi_address, corr_address, aadharNo, panNo, photo, sign, documentType, documentFile,sec_que,que_ans) 
+              VALUES ('$firstName', '$lastName', '$userName', '$password', '$email', '$phoneNumber', '$gender', '$dob', '$maritalStatus', '$resi_address', '$corr_address', '$aadharNo', '$panNo', '$photo', '$sign', '$documentType', '$documentFile','$security_q','$answer')";
+
+    
+        if (mysqli_query($conn, $query)) {
+            // Get the last inserted ID (User ID)
+            $user_id = mysqli_insert_id($conn);
+            $account_sql = "INSERT INTO accounts (id) 
+                    VALUES (?)"; 
+
+            // Prepare the query
+            $stmt = $conn->prepare($account_sql);
+
+            // Check if the statement was prepared successfully
+            if ($stmt === false) {
+                echo "<script>alert('Error preparing SQL statement: " . $conn->error . "'); window.location.href = 'user_data.php';</script>";
+                exit();
+            }
+
+            // Bind the parameters to the prepared statement: 'i' for integer (user_id), 's' for string (account_number)
+            $stmt->bind_param('i', $user_id);  // Bind user_id (int) and account_number (string)
+
+            // Execute the query
+            if ($stmt->execute()) {
+                echo "<script>alert('Registered Succesfully.. !'); window.location.href = 'login.php';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Error inserting into accounts table: " . $stmt->error . "'); window.location.href = 'user_data.php';</script>";
+                exit();
+            }
+        } else {
+            echo "<script>alert('Error inserting user data.'); window.location.href = 'user_data.php';</script>";
+        }
     }
+    echo "<script>window.location.href = 'login.php';</script>";
 }
-}
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -83,10 +111,10 @@ if (isset($_POST['sub_btn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Information Form</title>
 
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-      
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css?v=1.0">
 
@@ -100,7 +128,6 @@ if (isset($_POST['sub_btn'])) {
 
             <!-- Step 1: Personal Details -->
             <input type="radio" id="step1" name="step" hidden>
-            <label for="step1">Personal Details</label>
             <div class="step">
                 <h3>Personal Details</h3>
                 <input type="text" name="firstName" value="<?php echo $firstName; ?>" disabled>
@@ -120,27 +147,50 @@ if (isset($_POST['sub_btn'])) {
                 <input type="radio" name="maritalStatus" value="Unmarried" required> Unmarried
                 <input type="radio" name="maritalStatus" value="Divorced" required> Divorced
                 <br>
-                <label for="step2">Next</label>
+
+                <div class="row my-3">
+                <div class="col">
+                    <label for="securityQuestion">Security Question</label>
+                    <select name="securityQuestion" id="securityQuestion" class="form-control" required>
+                        <option value="">Select a security question</option>
+                        <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+                        <option value="What was the name of your first school?">What was the name of your first school?</option>
+                        <option value="In what city were you born?">In what city were you born?</option>
+                        <option value="What is the name of your favorite childhood friend?">What is the name of your favorite childhood friend?</option>
+                        <option value="street">What is the name of the street you grew up on?</option>
+                        <option value="What is the name of the street you grew up on?">What was the name of your first car?</option>
+                        <option value="What is the name of your high school?">What is the name of your high school?</option>
+                        <option value="What was the make and model of your first car?">What was the make and model of your first car?</option>
+                        <option value="What was the name of your favorite teacher?">What was the name of your favorite teacher?</option>
+                        <option value="What is your favorite movie?">What is your favorite movie?</option>
+                        <option value="What is your favorite book?">What is your favorite book?</option>
+                        <option value="What is your favorite vacation destination?">What is your favorite vacation destination?</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row my-3 mx-5">
+                    <label for="securityAnswer">Answer</label>
+                    <input type="text" class="form-control" id="securityAnswer" name="securityAnswer" required>
+            </div>
+
             </div>
 
             <!-- Step 2: Address Details -->
             <input type="radio" id="step2" name="step" hidden>
-            <label for="step2">Address Details</label>
             <div class="step">
-                <h3>Address Details</h3>
+                <h3>Permanat Address Details</h3>
                 <input type="text" name="addressLine1" placeholder="Address Line 1" required>
-                <input type="text" name="addressLine2" placeholder="Address Line 2" >
-                <input type="text" name="addressLine3" placeholder="Address Line 3" >
+                <input type="text" name="addressLine2" placeholder="Address Line 2">
+                <input type="text" name="addressLine3" placeholder="Address Line 3">
                 <h3>Corresponding Address Details</h3>
                 <input type="text" name="correspondingLine1" placeholder="Address Line 1" required>
-                <input type="text" name="correspondingLine2" placeholder="Address Line 2" >
-                <input type="text" name="correspondingLine3" placeholder="Address Line 3" >
-                <label for="step1">Previous</label>
+                <input type="text" name="correspondingLine2" placeholder="Address Line 2">
+                <input type="text" name="correspondingLine3" placeholder="Address Line 3">
+
             </div>
 
             <!-- Step 3: Identification Details -->
             <input type="radio" id="step3" name="step" hidden>
-            <label for="step3">Identification Details</label>
             <div class="step">
                 <h3>Identification Details</h3>
                 <input type="text" name="aadharNo" placeholder="Enter Aadhar Number" required>
@@ -149,12 +199,11 @@ if (isset($_POST['sub_btn'])) {
                 <input type="file" name="photo" accept=".jpg, .jpeg, .png, .pdf">
                 <span>Enter your Signature: </span>
                 <input type="file" name="sign" accept=".jpg, .jpeg, .png, .pdf">
-                <label for="step2">Previous</label>
+
             </div>
 
             <!-- Step 4: Documents -->
             <input type="radio" id="step4" name="step" hidden>
-            <label for="step4">Documents</label>
             <div class="step">
                 <h3>Documents</h3>
                 <select name="doxs">
@@ -165,7 +214,7 @@ if (isset($_POST['sub_btn'])) {
                 </select>
                 <input type="file" name="document" accept=".jpg, .jpeg, .png, .pdf">
                 <div class="submit">
-                    <label for="step3">Previous</label>
+
                 </div>
             </div>
             <input type="submit" value="submit" name="sub_btn">

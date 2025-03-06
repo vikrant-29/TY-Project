@@ -1,108 +1,116 @@
-/* Basic styling */
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    background: url('back3.jpeg') no-repeat center center fixed; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Bank_Management_System/bank_img/back3.jpeg');
+    background-size:cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Arial', sans-serif;
+    color: white;
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
-    background-image: url('/Bank_Management_System/bank_img/back3.jpeg');
-    background-size:cover;
-    background-position: center; 
-    background-attachment: fixed;
-    background-repeat: no-repeat; 
 }
 
+/* Form Container */
 .form-container {
-    width: 60%;
-    margin: auto;
-    margin-top: 70px;
-    padding: 20px;
-    background-color: transparent;
-    background: transparent;
+    width: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    margin: 5% auto;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-/* Hide all divs by default */
-.form-container .step {
-    display: none;
-    padding: 20px;
-    background: #fff;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-}
-
-/* Show only the selected step */
-.form-container input[type="radio"]:checked + label + .step {
-    display: block;
-}
-
-/* Styling for radio buttons */
-input[type="radio"] {
-}
-
-/* Labels as navigation buttons */
-label {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border-radius: 4px;
-    margin: 5px;
-    display: inline-block;
-}
-
-label:hover {
-    background-color: #006f82;
-}
-
-/* Navigation buttons styling */
-.submit {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.submit label {
-    background-color: #4CAF50;
-}
-
-.submit label:last-child {
-    background-color: #f44336;
-}
-
-.submit label:hover {
-    background-color: #45a049;
-}
-
+/* Form Headings */
 h3 {
-    font-size: 18px;
+    color: cyan;
+    text-transform: uppercase;
     margin-bottom: 10px;
 }
 
-/* Styling for input fields */
+/* Inputs */
 input[type="text"],
 input[type="date"],
 input[type="file"],
 select {
-    margin-bottom: 10px;
-    padding: 8px;
     width: 100%;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid cyan;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    outline: none;
 }
 
-.submit label {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border-radius: 4px;
-    margin: 5px;
+/* Radio Buttons */
+input[type="radio"] {
+    accent-color: cyan;
+}
+
+/* Labels for Navigation */
+label {
     display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: 1px solid cyan;
+    color: cyan;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+label:hover {
+    background: cyan;
+    color: black;
+}
+
+/* Submit Button */
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: cyan;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+input[type="submit"]:hover {
+    background: white;
+    color: cyan;
+}
+
+/* Responsive Design */
+/* Mobile Devices */
+@media (max-width: 767px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    select {
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        font-size: 14px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .form-container {
+        width: 70%;
+    }
 }
