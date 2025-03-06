@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 session_start();
 include('../includes/header.html');
 include('../includes/connect.php');
@@ -75,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_account'])) {
 
     echo "<script>window.location.href = 'dashboard.php';</script>";
 }
+
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>

@@ -199,7 +199,7 @@ if (isset($_POST['sub_btn'])) {
     </div>
 
     <div class="form-container">
-        <button class="btn-primary"><a href="invest_status.php">Check Status</a></button>
+    <a href="invest_status.php">Check Status</a>
         <h2>Mutual Fund Investment Application</h2>
         <!-- Add this line inside the form or at the top of the investment.php page -->
         <div class="form-group">

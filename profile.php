@@ -74,10 +74,10 @@ ob_end_flush();
 
     <div class="cards-container">
         <div class="card">
-            <img src="bank_img/notification.jpg" alt="Notifications" class="card-image">
-            <h3>Latest Notifications</h3>
-            <p>Check the latest updates and notices.</p>
-            <a href="#">View Notices</a>
+            <img src="bank_img/cards.png" alt="Notifications" class="card-image">
+            <h3>Apply For Cards</h3>
+            <p>Get Your Personal Cards</p>
+            <a href="cards.php">Apply</a>
         </div>
         <div class="card">
             <img src="bank_img/contact.jpg" alt="Contact Us" class="card-image">
@@ -90,7 +90,7 @@ ob_end_flush();
             <img src="bank_img/summary.jpg" alt="Account Summary" class="card-image">
             <h3>Account Summary</h3>
             <p>View details of your account and recent activities.</p>
-            <a href="#account_statement">View Summary</a>
+            <a href="account_statement.php">View Summary</a>
         </div>
         <div class="card">
             <img src="bank_img/transfer.jpg" alt="Transfer Money" class="card-image">

@@ -74,6 +74,7 @@ if ($account_number == NULL) {
             <a href="feedback.php"><i class="fas fa-comments"></i> Feedback/Complaints</a>
             <a href="loan.php"><i class="fas fa-hand-holding-usd"></i> Loan</a>
             <a href="invest.php"><i class="fas fa-chart-line"></i> Investment</a>
+            <a href="cards.php"><i class="fas fa-credit-card"></i> Cards</a>
         </div>
         <div class="right">
             <span class="balance"><i class="fas fa-wallet"></i> Balance: ₹<?php echo number_format($balance, 2); ?></span>
@@ -93,6 +94,7 @@ if ($account_number == NULL) {
                 <p><a href="account_statement.php"><i class="fas fa-file-alt"></i> Check Transactions History</a></p>
                 <p><a href="invest.php"><i class="fas fa-chart-line"></i> Go to Investment</a></p>
                 <p><a href="loan.php"><i class="fas fa-hand-holding-usd"></i> Apply for Loan</a></p>
+                <p><a href="cards.php"><i class="fas fa-credit-card"></i> Apply for Cards</a></p>
             <?php endif; ?>
         </div>
 

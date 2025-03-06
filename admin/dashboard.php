@@ -53,6 +53,7 @@ ob_end_flush();
             <a href="feedback.php">Feedback</a>
             <a href="admin_loan_app.php">Loan Section</a>
             <a href="admin_invest_app.php">Investment Section</a>
+            <a href="admin_card_app.php">Cards Section</a>
         </div>
         <div class="right">
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?> </span>
