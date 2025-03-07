@@ -40,6 +40,8 @@ ob_end_flush();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel | Bank Management</title>
     <link rel="stylesheet" href="../style/admin.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
@@ -50,18 +52,17 @@ ob_end_flush();
     <!-- Home Section -->
     <div id="home">
     <div id="profile">
-            <div class="profile-card">
-                <img src="<?php echo $path;?>" alt="Profile Background" class="profile-bg">
-                <div class="profile-content">
-                    <p><strong>ID:</strong><?php echo htmlspecialchars($_SESSION['id']); ?></p>
-                    <p><strong>Username:</strong> <?php echo htmlspecialchars($_SESSION['unm']); ?></p>
-                    <p><strong>Role:</strong> <?php echo htmlspecialchars($_SESSION['role']); ?></p>
-                    <p><strong>Name:</strong><?php echo htmlspecialchars($_SESSION['name']); ?></p>
-                    
-                </div>
-            </div>
+    <div class="profile-card">
+        <img src="<?php echo $path;?>" alt="Profile Background" class="profile-bg">
+        <div class="profile-content">
+            <p><i class="fas fa-id-badge"></i> <strong>ID:</strong> <?php echo htmlspecialchars($_SESSION['id']); ?></p>
+            <p><i class="fas fa-user"></i> <strong>Username:</strong> <?php echo htmlspecialchars($_SESSION['unm']); ?></p>
+            <p><i class="fas fa-briefcase"></i> <strong>Role:</strong> <?php echo htmlspecialchars($_SESSION['role']); ?></p>
+            <p><i class="fas fa-signature"></i> <strong>Name:</strong> <?php echo htmlspecialchars($_SESSION['name']); ?></p>
         </div>
-    </div>    
+    </div>
+</div>
+
 </body>
 
 </html>

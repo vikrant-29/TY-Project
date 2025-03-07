@@ -19,7 +19,6 @@ $mobile_number = $_SESSION['mob'];
 $user_id = $_SESSION['id'];
 $profile_img = $_SESSION['photo'];
 
-
 ob_end_flush();
 ?>
 <!DOCTYPE html>
@@ -40,18 +39,19 @@ ob_end_flush();
 
 
 
-    <div id="profile">
-        <div class="profile-card">
-            <img src="uimg/<?php echo $profile_img; ?>" alt="Profile Background" class="profile-bg">
-            <div class="profile-content">
-                <h3><?php echo htmlspecialchars($name); ?></h3>
-                <p><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></p>
-                <p><strong>Mobile:</strong> <?php echo htmlspecialchars($mobile_number); ?></p>
-                <p><strong>Balance:</strong> ₹<?php echo number_format($balance, 2); ?></p>
-                <p><strong>Account No.:</strong> <?php echo htmlspecialchars($account_number); ?></p>
-            </div>
+<div id="profile">
+    <div class="profile-card">
+        <img src="uimg/<?php echo $profile_img; ?>" alt="Profile Background" class="profile-bg">
+        <div class="profile-content">
+            <h3><?php echo htmlspecialchars($name); ?></h3>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <?php echo htmlspecialchars($email); ?></p>
+            <p><i class="fas fa-phone-alt"></i> <strong>Mobile:</strong> <?php echo htmlspecialchars($mobile_number); ?></p>
+            <p><i class="fas fa-wallet"></i> <strong>Balance:</strong> ₹<?php echo number_format($balance, 2); ?></p>
+            <p><i class="fas fa-credit-card"></i> <strong>Account No.:</strong> <?php echo htmlspecialchars($account_number); ?></p>
         </div>
     </div>
+</div>
+
 
 
     <div class="cards-container">
