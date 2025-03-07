@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 session_start();
 include('../includes/header.html');
 include('../includes/connect.php');  // Update this path if needed
@@ -26,6 +28,8 @@ if (isset($_POST['approve']) || isset($_POST['reject'])) {
         echo "<script>alert('Error: Unable to $action card application.'); window.location.href = 'admin_card_app.php';</script>";
     }
 }
+
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>

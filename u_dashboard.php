@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+ob_start();
 // Ensure the user is logged in
 if (!isset($_SESSION['user_nm'])) {
     header("Location: login.php");
@@ -42,6 +43,7 @@ if ($account_number == NULL) {
     $_SESSION['ac_status'] = 0;
 }
 
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>

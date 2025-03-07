@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 session_start();
 include('../includes/header.html');
 include('../includes/connect.php');
@@ -12,6 +14,8 @@ if (!isset($_SESSION['ad_login'])) {
 // Fetch investment applications
 $query = "SELECT * FROM investment_applications";
 $result = mysqli_query($conn, $query);
+
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>

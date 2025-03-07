@@ -1,4 +1,7 @@
 <?php
+
+ob_start();
+
 session_start();
 include('includes/header.html');
 include('includes/connect.php');
@@ -45,6 +48,7 @@ if (isset($_POST['verify_answer'])) {
         echo "<script>alert('Incorrect answer. Please try again.');</script>";
     }
 }
+ob_end_flush();
 ?>
 <!doctype html>
 <html lang="en">

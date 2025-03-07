@@ -1,4 +1,7 @@
 <?php
+
+ob_start();
+
 session_start();
 include('includes/header.html');
 include('includes/connect.php');
@@ -8,28 +11,20 @@ if (!isset($_SESSION['user_nm'])) {
     header("Location: login.php");
     exit();
 }
-$user_id = $_SESSION['id']; 
 
-// Fetch loan application details for the user with the approval status
-$query = "SELECT * FROM loan_applications WHERE user_id = '$user_id' ORDER BY id DESC LIMIT 1";
+$firstName = $_SESSION['nm'];
+$lastName = $_SESSION['lastName'];
+$userName = $_SESSION['user_nm'];
+$balance = $_SESSION['balance'];
+$email = $_SESSION['email'];
+$phoneNumber = $_SESSION['mob'];
+$user_id = $_SESSION['id'];
+
+// Fetch all loan applications for the user
+$query = "SELECT * FROM loan_applications WHERE user_id = '$user_id' ORDER BY id DESC";
 $result = mysqli_query($conn, $query);
-$application = mysqli_fetch_assoc($result);
 
-$status = $application ? $application['approval_status'] : 'No application found';
-
-// Fetch additional loan details if the application is approved
-if ($status == 'Approved') {
-    $loanType = $application['loanType'];
-    $loanAmount = $application['loanAmount'];
-    $loanPurpose = $application['loanPurpose'];
-    $employmentStatus = $application['employmentStatus'];
-    $annualIncome = $application['annualIncome'];
-    $creditScore = $application['creditScore'];
-    $incomeProof = $application['incomeProof'];
-    $identityProof = $application['identityProof'];
-    $submissionDate = $application['submissionDate'];
-    $approvalDate = $application['approval_status'] == 'Approved' ? $application['submissionDate'] : 'Not available';
-}
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -43,68 +38,7 @@ if ($status == 'Approved') {
     <link rel="stylesheet" href="style/u_dashboard.css">
     <!-- Custom CSS -->
     <style>
-    .contain {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 30px;
-        margin-top: 30px;
-        background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 217, 255, 0.5); /* Neon blue shadow */
-        backdrop-filter: blur(10px);
-        text-align: center;
-    }
-
-    .h {
-        color: #00d9ff; /* Neon blue color */
-        text-transform: uppercase;
-        text-shadow: 0 0 10px rgba(0, 217, 255, 0.5); /* Neon glow effect */
-        margin-bottom: 20px;
-    }
-
-    p {
-        font-size: 18px;
-        color: #d1f0ff; /* Light blue text */
-    }
-
-    p strong {
-        color: #00d9ff; /* Neon blue for strong text */
-    }
-
-    .btn-primary {
-        background-color: #00d9ff; /* Neon blue color */
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        color: black; /* Dark text for contrast */
-        font-weight: bold;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        text-decoration: none;
-    }
-
-    .btn-primary:hover {
-        background-color: #ff0077; /* Neon pink on hover */
-        box-shadow: 0 0 15px rgba(255, 0, 119, 0.8); /* Neon pink glow */
-        color: white; /* White text on hover */
-    }
-
-    .fas {
-        margin-right: 10px; /* Add spacing between icon and text */
-    }
-
-    .loan-details {
-        background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-        border-radius: 10px;
-        margin-top: 20px;
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
-    }
-
-    .loan-details p {
-        font-size: 16px;
-        color: #d1f0ff;
-    }
+    
     </style>
 </head>
 <body>
@@ -112,25 +46,46 @@ if ($status == 'Approved') {
 <?php include('includes/navbar.php');?>
 
 
-    <div class="contain">
+    <div class="container">
         <h2 class="h"><i class="fas fa-file-invoice"></i> Your Loan Application Status</h2>
-        <p>Your current application status is: <strong><?php echo $status; ?></strong></p>
-        
-        <?php if ($status == 'Approved'): ?>
-            <div class="loan-details">
-                <h4>Approved Loan Details</h4>
-                <p><strong>Full Name:</strong> <?php echo $application['firstName'] . ' ' . $application['lastName']; ?></p>
-                <p><strong>Loan Type:</strong> <?php echo $loanType; ?></p>
-                <p><strong>Loan Amount:</strong> ₹<?php echo number_format($loanAmount, 2); ?></p>
-                <p><strong>Loan Purpose:</strong> <?php echo $loanPurpose; ?></p>
-                <p><strong>Employment Status:</strong> <?php echo $employmentStatus; ?></p>
-                <p><strong>Annual Income:</strong> ₹<?php echo number_format($annualIncome, 2); ?></p>
-                <p><strong>Credit Score:</strong> <?php echo $creditScore; ?></p>
-                <p><strong>Income Proof:</strong> <a href="uimg/<?php echo $incomeProof; ?>" target="_blank">View Income Proof</a></p>
-                <p><strong>Identity Proof:</strong> <a href="uimg/<?php echo $identityProof; ?>" target="_blank">View Identity Proof</a></p>
-                <p><strong>Application Submission Date:</strong> <?php echo $submissionDate; ?></p>
-                <p><strong>Approval Date:</strong> <?php echo $approvalDate; ?></p>
-            </div>
+
+        <?php if (mysqli_num_rows($result) > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Loan Type</th>
+                        <th>Loan Amount</th>
+                        <th>Loan Purpose</th>
+                        <th>Application Status</th>
+                        <th>Submission Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($application = mysqli_fetch_assoc($result)): ?>
+                        <tr>
+                            <td><?php echo $application['id']; ?></td>
+                            <td><?php echo $application['loanType']; ?></td>
+                            <td>₹<?php echo number_format($application['loanAmount'], 2); ?></td>
+                            <td><?php echo $application['loanPurpose']; ?></td>
+                            <td>
+                                <?php
+                                if ($application['approval_status'] == 'Approved') {
+                                    echo '<span class="badge badge-success">Approved</span>';
+                                } elseif ($application['approval_status'] == 'Pending') {
+                                    echo '<span class="badge badge-warning">Pending</span>';
+                                } else {
+                                    echo '<span class="badge badge-danger">Rejected</span>';
+                                }
+                                ?>
+                            </td>
+                            <td><?php echo $application['submissionDate']; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>You have not submitted any loan applications yet.</p>
         <?php endif; ?>
         
         <a href="loan.php" class="btn btn-primary"><i class="fas fa-hand-holding-usd"></i> Apply for a new loan</a>

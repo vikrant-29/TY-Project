@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 session_start();
 include('includes/connect.php');
@@ -37,11 +38,13 @@ if (isset($_POST['sub_btn'])) {
 
     // Execute the query
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Investment application submitted successfully.'); window.location.href = 'investment_status.php';</script>";
+        echo "<script>alert('Investment application submitted successfully.'); window.location.href = 'invest_status.php';</script>";
     } else {
         echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.location.href = 'invest.php';</script>";
     }
 }
+
+ob_end_flush();
 
 ?>
 

@@ -1,5 +1,7 @@
 <?php
 
+ob_start();
+
 session_start();
 include('includes/connect.php');
 include('includes/header.html');  // Update this path if needed
@@ -46,6 +48,7 @@ if (isset($_POST['sub_btn'])) {
         echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.location.href = 'loan.php';</script>";
     }
 }
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>

@@ -1,7 +1,11 @@
 <?php
 ob_start();
 
+session_set_cookie_params(1800);  // Set the cookie expiration time to 30 minutes (1800 seconds)
+ini_set('session.gc_maxlifetime', 1800); // Set the session max lifetime to 30 minutes
 session_start();
+
+
 include('../includes/header.html');
 include('../includes/connect.php');  // Update this path if needed
 
@@ -68,8 +72,7 @@ ob_end_flush();
                 <?php
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $statusClass = ($row['approval_status'] == 'Pending') ? 'table-warning' : '';
-                        echo "<tr class='$statusClass'>
+                        echo "<tr>
                                 <td>{$row['id']}</td>
                                 <td>{$row['firstName']} {$row['lastName']}</td>
                                 <td>{$row['loanType']}</td>

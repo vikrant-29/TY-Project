@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Feedback submitted successfully!";
+        echo "<script>window.location.href = 'u_dashboard.php';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
