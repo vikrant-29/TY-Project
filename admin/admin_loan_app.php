@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 session_start();
 include('../includes/header.html');
 include('../includes/connect.php');  // Update this path if needed
@@ -8,34 +10,24 @@ if (!isset($_SESSION['ad_login'])) {
     exit();
 }
 
-// Fetch all loan applications with pending status
-$query = "SELECT * FROM loan_applications WHERE approval_status = 'Pending'";
+// Fetch all loan applications, regardless of status
+$query = "SELECT * FROM loan_applications";
 $result = mysqli_query($conn, $query);
 
 // Handle approve or reject action
-if (isset($_GET['action']) && isset($_GET['id'])) {
-    $loanId = $_GET['id'];
-    $action = $_GET['action'];
+if (isset($_POST['approve']) || isset($_POST['reject'])) {
+    $loanId = $_POST['loan_id'];
+    $action = isset($_POST['approve']) ? 'Approved' : 'Rejected';
 
     // Update approval status
-    if ($action == 'approve') {
-        $updateQuery = "UPDATE loan_applications SET approval_status = 'Approved' WHERE id = '$loanId'";
-        if (mysqli_query($conn, $updateQuery)) {
-            // Optional: Log this approval action if needed
-            echo "<script>alert('Loan application approved successfully.'); window.location.href = 'admin_loan_app.php';</script>";
-        } else {
-            echo "<script>alert('Error: Unable to approve loan application.'); window.location.href = 'admin_loan_app.php';</script>";
-        }
-    } elseif ($action == 'reject') {
-        $updateQuery = "UPDATE loan_applications SET approval_status = 'Rejected' WHERE id = '$loanId'";
-        if (mysqli_query($conn, $updateQuery)) {
-            // Optional: Log this rejection action if needed
-            echo "<script>alert('Loan application rejected successfully.'); window.location.href = 'admin_loan_app.php';</script>";
-        } else {
-            echo "<script>alert('Error: Unable to reject loan application.'); window.location.href = 'admin_loan_app.php';</script>";
-        }
+    $updateQuery = "UPDATE loan_applications SET approval_status = '$action' WHERE id = '$loanId'";
+    if (mysqli_query($conn, $updateQuery)) {
+        echo "<script>alert('Loan application $action successfully.'); window.location.href = 'admin_loan_app.php';</script>";
+    } else {
+        echo "<script>alert('Error: Unable to $action loan application.'); window.location.href = 'admin_loan_app.php';</script>";
     }
 }
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -51,26 +43,11 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">HORIZON BANK</div>
-        <div class="menu">
-            <a href="dashboard.php">Home</a>
-            <a href="req_account.php">New Accounts Request</a>
-            <a href="reg_acc.php">Registered Accounts</a>
-            <a href="feedback.php">Feedback</a>
-            <a href="admin_loan_app.php">Loan Section</a>
-            <a href="admin_invest_app.php">Investment Section</a>
-        </div>
-        <div class="right">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?> </span>
-            <form method="POST" action="admin_logout.php">
-                <button type="submit" class="logout">Logout</button>
-            </form>
-        </div>
-    </div>
-    <div>
-        <h2 class="text-center">Pending Loan Applications</h2>
-        <table>
+    <?php include('../includes/admin_navbar.php');?>
+
+    
+        <h2 class="text-center">Loan Applications</h2>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -91,7 +68,8 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                 <?php
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>
+                        $statusClass = ($row['approval_status'] == 'Pending') ? 'table-warning' : '';
+                        echo "<tr class='$statusClass'>
                                 <td>{$row['id']}</td>
                                 <td>{$row['firstName']} {$row['lastName']}</td>
                                 <td>{$row['loanType']}</td>
@@ -104,13 +82,18 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                                 <td><a href='../uimg/{$row['identityProof']}' target='_blank'>View Identity Proof</a></td>
                                 <td>{$row['approval_status']}</td>
                                 <td>
-                                    <a href='admin_loan_app.php?action=approve&id={$row['id']}' class='btn btn-approve'>Approve</a>
-                                    <a href='admin_loan_app.php?action=reject&id={$row['id']}' class='btn btn-reject'>Reject</a>
+                                    <form action='admin_loan_app.php' method='POST'>
+                                        <input type='hidden' name='loan_id' value='{$row['id']}'>
+                                        " . ($row['approval_status'] == 'Pending' ? "
+                                        <button type='submit' name='approve' class='btn btn-success'>Approve</button>
+                                        <button type='submit' name='reject' class='btn btn-danger'>Reject</button>" : "
+                                        <span class='badge badge-secondary'>Already Processed</span>") . "
+                                    </form>
                                 </td>
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='12' class='text-center'>No pending applications.</td></tr>";
+                    echo "<tr><td colspan='12' class='text-center'>No loan applications available.</td></tr>";
                 }
                 ?>
             </tbody>

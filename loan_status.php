@@ -108,6 +108,10 @@ if ($status == 'Approved') {
     </style>
 </head>
 <body>
+
+<?php include('includes/navbar.php');?>
+
+
     <div class="contain">
         <h2 class="h"><i class="fas fa-file-invoice"></i> Your Loan Application Status</h2>
         <p>Your current application status is: <strong><?php echo $status; ?></strong></p>

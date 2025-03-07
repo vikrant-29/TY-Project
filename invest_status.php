@@ -24,6 +24,7 @@ $application = mysqli_fetch_assoc($result);
     <title>Investment Application Status</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/u_dashboard.css">
 </head>
 <style>
     body {
@@ -113,6 +114,10 @@ $application = mysqli_fetch_assoc($result);
     }
 </style>
 <body>
+
+<?php include('includes/navbar.php');?>
+
+
     <div class="container">
         <h2>Your Investment Application Status</h2>
         <?php if ($application): ?>

@@ -26,8 +26,8 @@ if (isset($_POST['sub_btn'])) {
 
     // Personal Details
     $firstName = $_SESSION['first_name'];  // Assuming you have first name stored in session
-    $lastName = $_SESSION['last_name'];    // Assuming you have last name stored in session
-    $userName = $_SESSION['user_nm'];      // Assuming you have user name stored in session
+    $lastName = $_SESSION['lastName'];    // Assuming you have last name stored in session
+    $userName = $_SESSION['nm'];      // Assuming you have user name stored in session
     $phoneNumber = $_SESSION['mob'];       // Assuming mobile number is stored in session
 
     // File Uploads
@@ -60,6 +60,7 @@ if (isset($_POST['sub_btn'])) {
     <title>Card Application - Horizon Bank</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/u_dashboard.css">
     <!-- Custom CSS -->
     <style>
     body {
@@ -164,6 +165,8 @@ if (isset($_POST['sub_btn'])) {
 </head>
 
 <body>
+<?php include('includes/navbar.php');?>
+
     <div class="form-container">
         <a href="card_status.php">Check Status</a>
         <h2>Card Application Form</h2>

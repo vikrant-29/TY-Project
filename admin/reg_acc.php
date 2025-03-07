@@ -101,23 +101,7 @@ ob_end_flush();
         <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">HORIZON BANK</div>
-        <div class="menu">
-            <a href="dashboard.php">Home</a>
-            <a href="req_account.php">New Accounts Request</a>
-            <a href="reg_acc.php">Registered Accounts</a>
-            <a href="feedback.php">Feedback</a>
-            <a href="admin_loan_app.php">Loan Section</a>
-            <a href="admin_invest_app.php">Investment Section</a>
-        </div>
-        <div class="right">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?> </span>
-            <form method="POST" action="admin_logout.php">
-                <button type="submit" class="logout">Logout</button>
-            </form>
-        </div>
-    </div>
+    <?php include('../includes/admin_navbar.php');?>
 
     <div id="reg_acc">
         <h3>Users with Assigned Account Numbers</h3>

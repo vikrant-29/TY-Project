@@ -9,32 +9,21 @@ if (!isset($_SESSION['ad_login'])) {
     exit();
 }
 
-// Fetch all pending card applications
-$query = "SELECT * FROM card_applications WHERE status = 'pending'";
+// Fetch all card applications, regardless of status
+$query = "SELECT * FROM card_applications";
 $result = mysqli_query($conn, $query);
 
 // Handle approve or reject action
-if (isset($_GET['action']) && isset($_GET['id'])) {
-    $cardId = $_GET['id'];
-    $action = $_GET['action'];
+if (isset($_POST['approve']) || isset($_POST['reject'])) {
+    $cardId = $_POST['card_id'];
+    $action = isset($_POST['approve']) ? 'approved' : 'rejected';
 
     // Update approval status
-    if ($action == 'approve') {
-        $updateQuery = "UPDATE card_applications SET status = 'approved' WHERE id = '$cardId'";
-        if (mysqli_query($conn, $updateQuery)) {
-            // Optional: Log this approval action if needed
-            echo "<script>alert('Card application approved successfully.'); window.location.href = 'admin_card_app.php';</script>";
-        } else {
-            echo "<script>alert('Error: Unable to approve card application.'); window.location.href = 'admin_card_app.php';</script>";
-        }
-    } elseif ($action == 'reject') {
-        $updateQuery = "UPDATE card_applications SET status = 'rejected' WHERE id = '$cardId'";
-        if (mysqli_query($conn, $updateQuery)) {
-            // Optional: Log this rejection action if needed
-            echo "<script>alert('Card application rejected successfully.'); window.location.href = 'admin_card_app.php';</script>";
-        } else {
-            echo "<script>alert('Error: Unable to reject card application.'); window.location.href = 'admin_card_app.php';</script>";
-        }
+    $updateQuery = "UPDATE card_applications SET status = '$action' WHERE id = '$cardId'";
+    if (mysqli_query($conn, $updateQuery)) {
+        echo "<script>alert('Card application $action successfully.'); window.location.href = 'admin_card_app.php';</script>";
+    } else {
+        echo "<script>alert('Error: Unable to $action card application.'); window.location.href = 'admin_card_app.php';</script>";
     }
 }
 ?>
@@ -52,28 +41,11 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">HORIZON BANK</div>
-        <div class="menu">
-            <a href="dashboard.php">Home</a>
-            <a href="req_account.php">New Accounts Request</a>
-            <a href="reg_acc.php">Registered Accounts</a>
-            <a href="feedback.php">Feedback</a>
-            <a href="admin_loan_app.php">Loan Section</a>
-            <a href="admin_invest_app.php">Investment Section</a>
-            <a href="admin_card_app.php">Card Section</a>
-        </div>
-        <div class="right">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?> </span>
-            <form method="POST" action="admin_logout.php">
-                <button type="submit" class="logout">Logout</button>
-            </form>
-        </div>
-    </div>
+    <?php include('../includes/admin_navbar.php'); ?>
 
     <div>
-        <h2 class="text-center">Pending Card Applications</h2>
-        <table class="table table-bordered">
+        <h2>Card Applications</h2>
+        <table border="1">
             <thead>
                 <tr>
                     <th>#</th>
@@ -94,6 +66,8 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                 <?php
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
+                        // Highlight pending applications with a yellow background
+                        //$statusClass = ($row['status'] == 'pending') ? 'table-warning' : '';
                         echo "<tr>
                                 <td>{$row['id']}</td>
                                 <td>{$row['firstName']} {$row['lastName']}</td>
@@ -107,13 +81,18 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                                 <td><a href='../uimg/{$row['identityProof']}' target='_blank'>View Identity Proof</a></td>
                                 <td>" . ucfirst($row['status']) . "</td>
                                 <td>
-                                    <a href='admin_card_app.php?action=approve&id={$row['id']}' class='btn btn-success'>Approve</a>
-                                    <a href='admin_card_app.php?action=reject&id={$row['id']}' class='btn btn-danger'>Reject</a>
+                                    <form action='admin_card_app.php' method='POST'>
+                                        <input type='hidden' name='card_id' value='{$row['id']}'>
+                                        " . ($row['status'] == 'pending' ? "
+                                        <button type='submit' name='approve' class='btn btn-success'>Approve</button>
+                                        <button type='submit' name='reject' class='btn btn-danger'>Reject</button>" : "
+                                        <span class='badge badge-secondary'>Already Processed</span>") . "
+                                    </form>
                                 </td>
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='12' class='text-center'>No pending applications.</td></tr>";
+                    echo "<tr><td colspan='12' class='text-center'>No card applications available.</td></tr>";
                 }
                 ?>
             </tbody>

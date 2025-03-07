@@ -58,26 +58,8 @@ ob_end_flush();
 </head>
 
 <body>
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="bank_img/logo_fade.jpeg" alt="Bank Logo">
-            <span>HORIZON BANK</span>
-        </div>
-        <div class="menu">
-            <a href="u_dashboard.php"><i class="fas fa-home"></i> Home</a>
-            <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
-            <a href="account_statement.php"><i class="fas fa-file-alt"></i> Account Statement</a>
-            <a href="transaction.php"><i class="fas fa-exchange-alt"></i> Fund Transfer</a>
-            <a href="feedback.php"><i class="fas fa-comments"></i> Feedback/Complaints</a>
-            <a href="loan.php"><i class="fas fa-hand-holding-usd"></i> Loan</a>
-            <a href="invest.php"><i class="fas fa-chart-line"></i> Investment</a>
-        </div>
-        <div class="right">
-            <span class="balance"><i class="fas fa-wallet"></i> Balance: ₹<?php echo number_format($balance, 2); ?></span>
-            <a href="logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-    </div>
+<?php include('includes/navbar.php');?>
+
 
 
     <label style="font-size: 20px;">Submit Your Feedback or Complaint : </label>

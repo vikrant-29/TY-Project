@@ -3,6 +3,14 @@ session_start();
 include('includes/connect.php');
 include('includes/header.html');
 
+$account_number = $_SESSION['acc_no'];
+$balance = $_SESSION['balance'];
+$email = $_SESSION['email'];
+$name = $_SESSION['nm'];
+$mobile_number = $_SESSION['mob'];
+$user_id = $_SESSION['id'];
+$profile_img = $_SESSION['photo'];
+
 if (!isset($_SESSION['user_nm'])) {
     header("Location: login.php");
     exit();
@@ -25,6 +33,7 @@ $application = mysqli_fetch_assoc($result);
     <title>Card Application Status</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/u_dashboard.css">
 </head>
 <style>
     body {
@@ -114,6 +123,9 @@ $application = mysqli_fetch_assoc($result);
     }
 </style>
 <body>
+
+<?php include('includes/navbar.php');?>
+
     <div class="container">
         <h2>Your Card Application Status</h2>
         <?php if ($application): ?>
