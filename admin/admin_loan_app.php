@@ -47,32 +47,32 @@ ob_end_flush();
 
 <body>
     <!-- Navbar -->
-    <?php include('../includes/admin_navbar.php');?>
+    <?php include('../includes/admin_navbar.php'); ?>
 
-    
-        <h2 class="text-center">Loan Applications</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Full Name</th>
-                    <th>Loan Type</th>
-                    <th>Loan Amount</th>
-                    <th>Purpose</th>
-                    <th>Employment Status</th>
-                    <th>Annual Income</th>
-                    <th>Credit Score</th>
-                    <th>Income Proof</th>
-                    <th>Identity Proof</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>
+
+    <h2 class="text-center">Loan Applications</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Loan Type</th>
+                <th>Loan Amount</th>
+                <th>Purpose</th>
+                <th>Employment Status</th>
+                <th>Annual Income</th>
+                <th>Credit Score</th>
+                <th>Income Proof</th>
+                <th>Identity Proof</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>
                                 <td>{$row['id']}</td>
                                 <td>{$row['firstName']} {$row['lastName']}</td>
                                 <td>{$row['loanType']}</td>
@@ -94,13 +94,13 @@ ob_end_flush();
                                     </form>
                                 </td>
                               </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='12' class='text-center'>No loan applications available.</td></tr>";
                 }
-                ?>
-            </tbody>
-        </table>
+            } else {
+                echo "<tr><td colspan='12' class='text-center'>No loan applications available.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>

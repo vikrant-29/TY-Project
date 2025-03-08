@@ -56,19 +56,20 @@ ob_end_flush();
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>User Dashboard | Bank Management</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style/u_dashboard.css">
+
+    <link rel="icon" href="../logo_fade.ico" type="image/x-icon">
 </head>
 
 <body>
-<!-- including navbar -->
-  <?php include('includes/navbar.php');?>
+    <!-- including navbar -->
+    <?php include('includes/navbar.php'); ?>
 
     <!-- User Dashboard Content -->
     <div id="home">

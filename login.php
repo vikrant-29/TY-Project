@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
                 FROM users 
                 WHERE userName = '$nm'";
     $myres = mysqli_query($conn, $query_1);
-    
+
     // Check if user exists
     if (mysqli_num_rows($myres) > 0) {
         $row = mysqli_fetch_assoc($myres);
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         if ($row['login_attempts'] >= 3) {
             $last_attempt = strtotime($row['last_failed_attempt']);
             $current_time = time();
-            
+
             // If the user is locked out for 24 hours
             if (($current_time - $last_attempt) < 86400) {
                 $_SESSION['error_msg'] = 'You have been locked out due to too many failed login attempts. Please try again after 24 hours.';
@@ -79,6 +79,7 @@ ob_end_flush();
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -87,14 +88,16 @@ ob_end_flush();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="style/reg1.css">
     <title>User Login</title>
-</head>
-<body>
+
+
+
     <style>
         .neon-link {
             color: #39FF14;
             text-decoration: none;
             text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 40px #00FF00, 0 0 60px #00FF00, 0 0 80px #00FF00, 0 0 100px #00FF00;
         }
+
         .neon-link:hover {
             color: rgb(148, 252, 130);
             font-weight: 400;
@@ -103,6 +106,11 @@ ob_end_flush();
             text-decoration: underline;
         }
     </style>
+    <link rel="icon" href="bank_img/logo_fade.ico" type="image/x-icon">
+</head>
+
+<body>
+
     <div class="container my-5 shadow-lg p-3 mb-5 bg-transparent rounded">
         <!-- Check for any session error messages -->
         <?php
@@ -130,4 +138,5 @@ ob_end_flush();
         </form>
     </div>
 </body>
+
 </html>

@@ -29,6 +29,7 @@ ob_end_flush();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,12 +39,13 @@ ob_end_flush();
     <link rel="stylesheet" href="style/u_dashboard.css">
     <!-- Custom CSS -->
     <style>
-    
+
     </style>
 </head>
+
 <body>
 
-<?php include('includes/navbar.php');?>
+    <?php include('includes/navbar.php'); ?>
 
 
     <div class="container">
@@ -87,8 +89,9 @@ ob_end_flush();
         <?php else: ?>
             <p>You have not submitted any loan applications yet.</p>
         <?php endif; ?>
-        
+
         <a href="loan.php" class="btn btn-primary"><i class="fas fa-hand-holding-usd"></i> Apply for a new loan</a>
     </div>
 </body>
+
 </html>
