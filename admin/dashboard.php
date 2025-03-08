@@ -1,7 +1,11 @@
 <?php
 ob_start();
 
-session_start();
+
+session_set_cookie_params(1800);  // Set session cookie timeout to 30 minutes (1800 seconds)
+ini_set('session.gc_maxlifetime', 1800); // Set session lifetime to 30 minutes
+session_start(); // Start the session
+
 include('../includes/header.html');
 include('../includes/connect.php');
 //Redirect to login if admin is not logged in

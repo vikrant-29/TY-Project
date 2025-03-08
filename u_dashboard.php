@@ -1,7 +1,13 @@
 <?php
-session_start();
-
 ob_start();
+
+
+session_set_cookie_params(1800);  // Set session cookie timeout to 30 minutes (1800 seconds)
+ini_set('session.gc_maxlifetime', 1800); // Set session lifetime to 30 minutes
+session_start(); // Start the session
+
+
+
 // Ensure the user is logged in
 if (!isset($_SESSION['user_nm'])) {
     header("Location: login.php");
@@ -37,10 +43,10 @@ $stmt->close();
 // Check if user has account number
 if ($account_number == NULL) {
     $account_pending = true;
-    $_SESSION['ac_status'] = 1;
+    $_SESSION['ac_status'] = true;
 } else {
     $account_pending = false;
-    $_SESSION['ac_status'] = 0;
+    $_SESSION['ac_status'] = false;
 }
 
 ob_end_flush();
@@ -69,10 +75,10 @@ ob_end_flush();
         <div class="content">
             <h2>Welcome, <?php echo htmlspecialchars($_SESSION['user_nm']); ?> <i class="fas fa-smile"></i></h2>
 
-            <?php if ($account_pending): ?>
+            <?php if ($_SESSION['ac_status']): ?>
                 <p><i class="fas fa-hourglass-half"></i> Your account is pending approval. Please wait for admin approval before you can perform any transactions.</p>
             <?php else: ?>
-                <p><i class="fas fa-credit-card"></i> Your account number is: <?php echo htmlspecialchars($account_number); ?></p>
+                <p><i class="fas fa-credit-card"></i> Your account number is: <?php echo htmlspecialchars($_SESSION['acc_no']); ?></p>
                 <p><a href="account_statement.php"><i class="fas fa-file-alt"></i> Check Transactions History</a></p>
                 <p><a href="invest.php"><i class="fas fa-chart-line"></i> Go to Investment</a></p>
                 <p><a href="loan.php"><i class="fas fa-hand-holding-usd"></i> Apply for Loan</a></p>
