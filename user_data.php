@@ -207,7 +207,7 @@ ob_end_flush();
             <input type="radio" id="step4" name="step" hidden>
             <div class="step">
                 <h3>Documents</h3>
-                <select name="doxs">
+                <select name="doxs" required>
                     <option value="addhar_c">Aadhar card</option>
                     <option value="pan_c">PAN card</option>
                     <option value="voter_c">Voter card</option>

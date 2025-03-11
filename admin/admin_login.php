@@ -5,7 +5,6 @@ session_set_cookie_params(1800);  // Set session cookie timeout to 30 minutes (1
 ini_set('session.gc_maxlifetime', 1800); // Set session lifetime to 30 minutes
 session_start(); // Start the session
 
-
 include('../includes/header.html');
 include('../includes/connect.php');
 
@@ -14,28 +13,47 @@ if (isset($_POST['submit'])) {
     $nm = $_POST['admin_nm'];
     $pss = $_POST['admin_pss'];
 
-    // Fix the SQL query: Removed the extra comma after _name
-    $query_1 = "SELECT username, _role, pass, id, _name FROM admin WHERE username = '$nm' AND pass = '$pss'";
+    // Use prepared statement to prevent SQL injection
+    $query_1 = "SELECT username, _role, pass, id, _name FROM admin WHERE username = ? AND pass = ?";
 
-    $myres = mysqli_query($conn, $query_1);
+    // Prepare the statement
+    if ($stmt = $conn->prepare($query_1)) {
+        // Bind the parameters to the prepared statement
+        $stmt->bind_param("ss", $nm, $pss);
 
-    if (mysqli_num_rows($myres) > 0) {
-        // Fetch the result row
-        $row = mysqli_fetch_assoc($myres);
+        // Execute the statement
+        $stmt->execute();
 
-        // Set session variables
-        $_SESSION['ad_login'] = 1;
-        $_SESSION['unm'] = $nm;
-        $_SESSION['role'] = $row['_role'];  // Add _role from query result
-        $_SESSION['name'] = $row['_name'];  // Add _name from query result
-        $_SESSION['id'] = $row['id'];      // Add id from query result
+        // Store the result
+        $stmt->store_result();
 
-        // Redirect to dashboard
-        header('location: dashboard.php');
-        exit;
+        // Check if user exists
+        if ($stmt->num_rows > 0) {
+            // Bind the result variables
+            $stmt->bind_result($db_username, $db_role, $db_pass, $db_id, $db_name);
+
+            // Fetch the result
+            $stmt->fetch();
+
+            // Set session variables
+            $_SESSION['ad_login'] = 1;
+            $_SESSION['unm'] = $db_username;
+            $_SESSION['role'] = $db_role;
+            $_SESSION['name'] = $db_name;
+            $_SESSION['id'] = $db_id;
+
+            // Redirect to the dashboard
+            header('location: dashboard.php');
+            exit;
+        } else {
+            $_SESSION['ad_login'] = 0;
+            echo "<script>alert('Username/Password incorrect')</script>";
+        }
+
+        // Close the prepared statement
+        $stmt->close();
     } else {
-        $_SESSION['ad_login'] = 0;
-        echo "<script>alert('Username/Password incorrect')</script>";
+        echo "Error preparing statement: " . $conn->error;
     }
 }
 

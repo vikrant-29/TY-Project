@@ -49,6 +49,7 @@ ob_end_flush();
 </head>
 
 <body>
+<!--navbar-->
 <?php include('../includes/admin_navbar.php');?>
 
 

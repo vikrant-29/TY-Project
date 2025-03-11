@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['transfer'])) {
                 $transaction_stmt->execute();
     
                 // Commit the transaction
+                //ACID
                 $conn->commit();
     
                 // Update balance after successful transaction
@@ -103,6 +104,7 @@ ob_end_flush();
 ?>
 <html>
 <link rel="stylesheet" href="style/u_dashboard.css">
+<title>Transaction page</title>
  <!-- Font Awesome for Icons -->
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
  <?php include('includes/navbar.php');?>

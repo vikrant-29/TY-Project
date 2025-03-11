@@ -174,7 +174,8 @@ ob_end_flush();
 
 
     <div class="form-container">
-        <a href="loan_status.php">Loan Status</a>
+        <a href="loan_status.php">Loan Status</a><br>
+        <a href="emi_calc.php">EMI calculator</a>
         <h2>Loan Application Form</h2>
         <form action="loan.php" method="POST" enctype="multipart/form-data">
             <!-- Loan Type -->
