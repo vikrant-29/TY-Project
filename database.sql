@@ -36,7 +36,7 @@ CREATE TABLE accounts (
     status ENUM('Active', 'Inactive', 'Closed') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Active',
     PRIMARY KEY (id),
     UNIQUE KEY (acc_no),
-    CONSTRAINT fk_user_id FOREIGN KEY (id) REFERENCES user_table_name(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_user_id FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -71,9 +71,9 @@ CREATE TABLE transactions (
     KEY fk_user (sender_id),
     KEY fk_sender (sender_acc_no),
     KEY fk_receiver (receiver_acc_no),
-    CONSTRAINT fk_user FOREIGN KEY (sender_id) REFERENCES user_table_name(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_sender FOREIGN KEY (sender_acc_no) REFERENCES account_table_name(acc_no) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_receiver FOREIGN KEY (receiver_acc_no) REFERENCES account_table_name(acc_no) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (sender_id) REFERENCES accounts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_sender FOREIGN KEY (sender_acc_no) REFERENCES accounts(acc_no) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_receiver FOREIGN KEY (receiver_acc_no) REFERENCES accounts(acc_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE investment_applications (
