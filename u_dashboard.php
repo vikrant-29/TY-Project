@@ -40,14 +40,17 @@ if ($stmt->fetch()) {
 
 $stmt->close();
 
-// Check if user has account number
-if ($account_number == NULL) {
-    $account_pending = true;
-    $_SESSION['ac_status'] = true;
-} else {
-    $account_pending = false;
-    $_SESSION['ac_status'] = false;
+if (!isset($_SESSION['ac_status'])) {
+    // Check if user has account number
+    if ($account_number == NULL) {
+        $account_pending = true;
+        $_SESSION['ac_status'] = true;
+    } else {
+        $account_pending = false;
+        $_SESSION['ac_status'] = false;
+    }
 }
+
 
 ob_end_flush();
 ?>

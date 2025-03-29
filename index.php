@@ -17,17 +17,17 @@ if (isset($_POST['submit'])) {
     $query_1 = "SELECT userName, pass, id, photo, login_attempts, last_failed_attempt 
                 FROM users 
                 WHERE userName = ?";
-    
+
     if ($stmt = $conn->prepare($query_1)) {
         // Bind the username to the prepared statement
         $stmt->bind_param("s", $nm);
-        
+
         // Execute the query
         $stmt->execute();
-        
+
         // Store the result
         $stmt->store_result();
-        
+
         // Bind the results to variables
         $stmt->bind_result($db_userName, $db_pass, $db_id, $db_photo, $db_login_attempts, $db_last_failed_attempt);
 
