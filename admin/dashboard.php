@@ -20,7 +20,7 @@ if($_SESSION['id']==13324)
 }
 else
 {
-    $path = "../bank_img/adm2.jpg";
+    $path = "../bank_img/img3.jpg";
 }
 
 // Fetch feedback data along with user details
