@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $userResult = mysqli_query($conn, $checkUserQuery);
 
     if (mysqli_num_rows($userResult) > 0) {
-        echo "<script>alert('Username already exists. Please choose a different username.'); window.location.href = 'resgister.php';</script>";
+        echo "<script>alert('Username already exists. Please choose a different username.'); window.location.href = 'register.php';</script>";
     } else {
         // If the username is unique, proceed with storing the data in session variables
         $_SESSION['firstName'] = $_POST['firstName'];
